@@ -59,8 +59,8 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <ButtonLink href="/#contact" size="sm" variant="secondary" withArrow>
-            Kontakt
+          <ButtonLink href="/anfrage" size="sm" variant="primary" withArrow>
+            Projekt starten
           </ButtonLink>
         </div>
       </div>

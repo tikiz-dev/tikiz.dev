@@ -18,8 +18,15 @@ export const SITE = {
   descriptionEn:
     "Freelance web development with Next.js, TypeScript and modern UI. Specialized in performant, animated brand websites and custom web apps.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://tikiz.dev",
-  email: "hallo@tikiz.dev",
-  emailEn: "hello@tikiz.dev",
+  /**
+   * Until a real mailbox for tikiz.dev is set up (Mailbox.org, Cloudflare
+   * Email Routing, Google Workspace, …), route all contact through the
+   * existing Weserbergland Dienstleistungen inbox — same legal entity,
+   * already receiving mail. Swap back to `hallo@tikiz.dev` once the
+   * mailbox is live.
+   */
+  email: "info@weserbergland-dienstleistungen.de",
+  emailEn: "info@weserbergland-dienstleistungen.de",
   social: {
     github: "https://github.com/",
     linkedin: "https://www.linkedin.com/",

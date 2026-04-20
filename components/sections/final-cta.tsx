@@ -43,22 +43,22 @@ export function FinalCTA() {
 
               <div className="mt-10 flex flex-wrap items-center gap-4">
                 <Magnetic strength={0.3}>
-                  <ButtonLink
-                    href={`mailto:${SITE.email}?subject=Projektanfrage`}
-                    size="lg"
-                    withArrow
-                  >
-                    <Mail className="size-4 mr-1" />
-                    {SITE.email}
+                  <ButtonLink href="/anfrage" size="lg" withArrow>
+                    Projekt starten
                   </ButtonLink>
                 </Magnetic>
-                <ButtonLink href="/#work" size="lg" variant="secondary">
-                  Projekte ansehen
+                <ButtonLink
+                  href={`mailto:${SITE.email}?subject=Projektanfrage`}
+                  size="lg"
+                  variant="secondary"
+                >
+                  <Mail className="size-4 mr-1" />
+                  Direkt per E-Mail
                 </ButtonLink>
               </div>
 
               <p className="mt-8 text-xs font-mono text-[color:var(--color-text-subtle)]">
-                oder schreib mir direkt auf LinkedIn / GitHub
+                Oder schreib mir direkt auf LinkedIn / GitHub — Antwort innerhalb 24&nbsp;h
               </p>
             </div>
           </div>
