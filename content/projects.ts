@@ -84,7 +84,7 @@ export const PROJECTS: Project[] = [
     ],
     url: "https://weserbergland-dienstleistungen.de",
     accent: "brand",
-    status: "soon",
+    status: "live",
     featured: true,
     industry: "Gebäudereinigung · B2B-Dienstleistung",
     duration: "ca. 3 Wochen Konzept + Umsetzung",
