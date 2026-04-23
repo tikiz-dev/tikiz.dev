@@ -14,17 +14,15 @@ import {
   PUBLIC_MODULES,
   WARTUNG,
   CATEGORY_LABELS,
-  HOURLY_RATE_WITHOUT_CARE,
-  BUNDLE_DISCOUNT,
   getPackageModules,
   type ModuleCategory,
 } from "@/content/pricing";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Pakete & Preise",
+  title: "Pakete & Leistungen",
   description:
-    "Transparente Preisstruktur für Websites: 3 Pakete (Starter, Standard, Premium), modular zusammenstellbar, inklusive Wartungs-Optionen. Alles netto.",
+    "Drei Einstiegs-Pakete für Websites — vom Onepage bis zur Full-Stack-Firmenseite. Modular kombinierbar, jedes Angebot wird individuell kalkuliert.",
   alternates: { canonical: "/pakete" },
 };
 
@@ -49,19 +47,22 @@ export default function PaketePage() {
   return (
     <>
       <PageHero
-        eyebrow="Pakete & Preise"
+        eyebrow="Pakete & Leistungen"
         title={
           <>
-            Transparente Preise.{" "}
-            <span className="text-gradient-warm">Modular zusammenstellbar.</span>
+            Drei Einstiege,{" "}
+            <span className="text-gradient-warm">
+              individuell kombinierbar
+            </span>
+            .
           </>
         }
-        description="Drei Pakete als Startpunkt, über 40 Module zum Anpassen. Jede Änderung reproduzierbar kalkulierbar: Paketpreis minus entferntes, plus hinzugebuchtes. Keine Überraschungen — weder jetzt noch beim Change Request."
+        description="Vom Onepage bis zur Full-Stack-Firmenseite. Jedes Paket enthält eine feste Auswahl an Leistungen — Module lassen sich einzeln dazu- oder abbestellen. Der konkrete Preis steht im individuellen Angebot nach einem kurzen Kennenlerngespräch."
         meta={[
           { label: "Pakete", value: "3 Stufen" },
-          { label: "Module einzeln buchbar", value: String(PUBLIC_MODULES.length) },
-          { label: "Bundle-Rabatt", value: "−15 %" },
-          { label: "Alle Preise", value: "netto, zzgl. USt" },
+          { label: "Module", value: `${PUBLIC_MODULES.length} buchbar` },
+          { label: "Stack", value: "Next.js 16" },
+          { label: "Standort", value: "Hameln · Remote" },
         ]}
       />
 
@@ -72,12 +73,13 @@ export default function PaketePage() {
             <div className="mb-12 max-w-2xl">
               <Badge dot tone="brand">Pakete</Badge>
               <h2 className="display-2 mt-5">
-                Drei Einstiegs-Pakete, auf typische Kunden zugeschnitten.
+                Drei Einstiegs-Pakete, auf typische Projekte zugeschnitten.
               </h2>
               <p className="mt-4 text-[color:var(--color-text-muted)]">
-                Jedes Paket enthält eine Auswahl an Modulen, die zusammen
-                fertige Websites ergeben. Der Bundle-Rabatt von −15 % kommt
-                obendrauf, wenn alle Module als Paket gebucht werden.
+                Jedes Paket ist eine geprüfte Kombination aus Modulen, die
+                zusammen eine fertige Website ergeben. Die Richtpreise unten
+                sind Startpunkte — der finale Umfang und damit der Preis wird
+                im Gespräch festgelegt.
               </p>
             </div>
           </ScrollReveal>
@@ -98,7 +100,9 @@ export default function PaketePage() {
                   <article
                     className={cn(
                       "relative flex h-full flex-col overflow-hidden rounded-3xl border bg-[color:var(--color-surface-raised)] p-8 transition-shadow",
-                      pkg.featured ? `${accentBorder} ${accentGlow}` : "border-white/10 hover:border-white/20"
+                      pkg.featured
+                        ? `${accentBorder} ${accentGlow}`
+                        : "border-white/10 hover:border-white/20"
                     )}
                   >
                     {pkg.featured && (
@@ -120,23 +124,22 @@ export default function PaketePage() {
                       {pkg.audience}
                     </p>
 
-                    <div className="mt-8 flex items-baseline gap-2">
-                      <span className="text-4xl font-bold tracking-tight">
-                        {eur(pkg.price)}
-                      </span>
-                      <span className="text-sm text-[color:var(--color-text-muted)]">
-                        netto
-                      </span>
+                    <div className="mt-8">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-sm text-[color:var(--color-text-muted)]">
+                          ab
+                        </span>
+                        <span className="text-4xl font-bold tracking-tight">
+                          {eur(pkg.price)}
+                        </span>
+                      </div>
+                      <p className="mt-1 text-xs text-[color:var(--color-text-subtle)]">
+                        netto, individuell kalkuliert · Dauer {pkg.duration}
+                      </p>
                     </div>
-                    <p className="mt-1 text-xs text-[color:var(--color-text-subtle)]">
-                      Modul-Summe {eur(pkg.modulesum)} · Bundle-Rabatt −
-                      {Math.round(BUNDLE_DISCOUNT * 100)} %
-                    </p>
-                    <p className="mt-1 text-xs text-[color:var(--color-text-subtle)]">
-                      Dauer: {pkg.duration}
-                    </p>
 
-                    <ul className="mt-8 space-y-2.5 text-sm">
+                    <p className="eyebrow mt-8 mb-3">Enthaltene Leistungen</p>
+                    <ul className="space-y-2.5 text-sm">
                       {items.map(({ module, count }) => (
                         <li
                           key={module.id}
@@ -164,7 +167,7 @@ export default function PaketePage() {
                         withArrow
                         className="w-full"
                       >
-                        {pkg.name} anfragen
+                        Unverbindlich anfragen
                       </ButtonLink>
                     </div>
                   </article>
@@ -175,26 +178,31 @@ export default function PaketePage() {
 
           <ScrollReveal delay={0.2}>
             <p className="mt-8 text-center text-sm text-[color:var(--color-text-muted)]">
-              Laufende Drittkosten (Hosting bei Vercel, Domain, ggf. Resend/Upstash){" "}
-              trägt der Kunde direkt — getrennt vom Projekt-Honorar.
+              Laufende Drittkosten (Hosting, Domain, E-Mail-Versand) trägt der
+              Kunde direkt bei den jeweiligen Anbietern — getrennt vom
+              Projekt-Honorar.
             </p>
           </ScrollReveal>
         </Container>
       </section>
 
       {/* Module catalog */}
-      <section className="relative py-20 border-t border-white/5 scroll-mt-24" id="module">
+      <section
+        className="relative py-20 border-t border-white/5 scroll-mt-24"
+        id="module"
+      >
         <Container>
           <ScrollReveal>
             <div className="mb-12 max-w-2xl">
               <Badge dot tone="warm">Einzel-Module</Badge>
               <h2 className="display-2 mt-5">
-                Alle Module auf einen Blick.
+                Alle Leistungen auf einen Blick.
               </h2>
               <p className="mt-4 text-[color:var(--color-text-muted)]">
-                Jedes Modul ist einzeln buchbar. Im Angebot werden sie
-                transparent aufgeschlüsselt — so lässt sich jede Änderung
-                nachvollziehen und neu berechnen.
+                Jede Leistung ist ein abgegrenztes Modul mit klarem Umfang. Im
+                Angebot werden die gewählten Module einzeln aufgeschlüsselt —
+                so lässt sich jede spätere Änderung sauber nachvollziehen und
+                neu berechnen.
               </p>
             </div>
           </ScrollReveal>
@@ -215,39 +223,27 @@ export default function PaketePage() {
                           key={m.id}
                           className="group relative rounded-xl border border-white/5 bg-[color:var(--color-surface-raised)]/60 p-5 transition-colors hover:border-white/15"
                         >
-                          <div className="flex items-start justify-between gap-4">
-                            <div className="min-w-0 flex-1">
-                              <div className="flex items-center gap-2">
-                                <span className="font-mono text-[11px] tracking-wider text-[color:var(--color-text-subtle)]">
-                                  {m.id}
-                                </span>
-                                <h4 className="truncate text-[15px] font-semibold">
-                                  {m.name}
-                                </h4>
-                              </div>
-                              <p className="mt-1.5 text-sm leading-relaxed text-[color:var(--color-text-muted)]">
-                                {m.description}
-                              </p>
-                              {m.note && (
-                                <p className="mt-2 text-xs text-[color:var(--color-text-subtle)]">
-                                  Hinweis: {m.note}
-                                </p>
-                              )}
-                            </div>
-                            <div className="shrink-0 text-right">
-                              <div className="text-lg font-semibold tabular-nums">
-                                {eur(m.price)}
-                              </div>
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono text-[11px] tracking-wider text-[color:var(--color-text-subtle)]">
+                              {m.id}
+                            </span>
+                            <h4 className="text-[15px] font-semibold">
+                              {m.name}
                               {m.unit && (
-                                <div className="text-[11px] text-[color:var(--color-text-subtle)]">
-                                  {m.unit}
-                                </div>
+                                <span className="ml-1.5 text-xs font-normal text-[color:var(--color-text-subtle)]">
+                                  ({m.unit})
+                                </span>
                               )}
-                              <div className="mt-1 text-[11px] text-[color:var(--color-text-subtle)]">
-                                {m.duration}
-                              </div>
-                            </div>
+                            </h4>
                           </div>
+                          <p className="mt-1.5 text-sm leading-relaxed text-[color:var(--color-text-muted)]">
+                            {m.description}
+                          </p>
+                          {m.note && (
+                            <p className="mt-2 text-xs text-[color:var(--color-text-subtle)]">
+                              Hinweis: {m.note}
+                            </p>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -260,7 +256,10 @@ export default function PaketePage() {
       </section>
 
       {/* Wartung */}
-      <section className="relative py-20 border-t border-white/5 scroll-mt-24" id="wartung">
+      <section
+        className="relative py-20 border-t border-white/5 scroll-mt-24"
+        id="wartung"
+      >
         <Container>
           <ScrollReveal>
             <div className="mb-12 max-w-2xl">
@@ -271,7 +270,7 @@ export default function PaketePage() {
               <p className="mt-4 text-[color:var(--color-text-muted)]">
                 Eine Website ohne Pflege verliert in 12 Monaten an Performance,
                 Sicherheit und SEO-Ranking. Wer das nicht selbst managen will,
-                bucht Care. Kündbar nach 6 Monaten.
+                bucht Care dazu. Kündbar nach 6 Monaten.
               </p>
             </div>
           </ScrollReveal>
@@ -283,11 +282,14 @@ export default function PaketePage() {
                   <div className="text-2xl">{tier.icon}</div>
                   <h3 className="mt-3 text-xl font-semibold">{tier.name}</h3>
                   <div className="mt-4 flex items-baseline gap-1.5">
+                    <span className="text-sm text-[color:var(--color-text-muted)]">
+                      ab
+                    </span>
                     <span className="text-3xl font-bold tabular-nums">
                       {eur(tier.pricePerMonth)}
                     </span>
                     <span className="text-sm text-[color:var(--color-text-muted)]">
-                      / Monat netto
+                      / Monat
                     </span>
                   </div>
                   <ul className="mt-6 space-y-2 text-sm">
@@ -307,21 +309,23 @@ export default function PaketePage() {
 
           <ScrollReveal delay={0.2}>
             <p className="mt-8 text-center text-sm text-[color:var(--color-text-muted)]">
-              Ohne Wartungsvertrag: Änderungen nach Aufwand mit{" "}
-              {eur(HOURLY_RATE_WITHOUT_CARE)}/Stunde netto (Mindestabrechnung
-              1 Stunde).
+              Ohne Wartungsvertrag werden Änderungen nach Aufwand abgerechnet —
+              Stundensatz im individuellen Angebot.
             </p>
           </ScrollReveal>
         </Container>
       </section>
 
       {/* FAQ / Notes */}
-      <section className="relative py-20 border-t border-white/5" id="hinweise">
+      <section
+        className="relative py-20 border-t border-white/5"
+        id="hinweise"
+      >
         <Container>
           <ScrollReveal>
             <div className="mb-10 max-w-2xl">
               <Badge>Hinweise</Badge>
-              <h2 className="display-2 mt-5">Wichtiges zur Preisstruktur.</h2>
+              <h2 className="display-2 mt-5">Wichtiges zum Ablauf.</h2>
             </div>
           </ScrollReveal>
 
@@ -353,18 +357,22 @@ export default function PaketePage() {
                     "radial-gradient(ellipse 60% 60% at 30% 20%, rgb(31 167 255 / 0.18), transparent 60%), radial-gradient(ellipse 50% 50% at 80% 100%, rgb(255 154 70 / 0.14), transparent 70%), var(--color-canvas-900)",
                 }}
               />
-              <div aria-hidden className="absolute inset-0 -z-10 bg-grid opacity-30" />
+              <div
+                aria-hidden
+                className="absolute inset-0 -z-10 bg-grid opacity-30"
+              />
               <h2 className="display-2 mx-auto max-w-2xl">
-                Bereit für ein Angebot mit konkreten Zahlen?
+                Unverbindliches Kennenlerngespräch?
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-[color:var(--color-text-muted)]">
-                In 5 Minuten das Briefing-Formular ausfüllen, danach bekommst du
-                ein maßgeschneidertes Angebot inklusive transparenter
-                Modul-Aufschlüsselung.
+                Fülle das kurze Briefing-Formular aus oder ruf direkt an.
+                Danach bekommst du ein maßgeschneidertes Angebot mit konkreten
+                Zahlen — transparent aufgeschlüsselt, 14 Tage gültig, ohne
+                versteckte Positionen.
               </p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <ButtonLink href="/anfrage" size="lg" withArrow>
-                  Projekt starten
+                  Projekt besprechen
                 </ButtonLink>
                 <ButtonLink href="/work" variant="secondary" size="lg">
                   Referenzen ansehen
@@ -380,28 +388,27 @@ export default function PaketePage() {
 
 const NOTES = [
   {
-    title: "Alle Preise netto",
-    body: "Die Beträge verstehen sich ohne Umsatzsteuer. Auf Rechnung kommt 19 % USt dazu (Einzelunternehmer nach § 13 UStG).",
+    title: "Angebot nach Kennenlerngespräch",
+    body: "Der konkrete Preis deines Projekts hängt vom Umfang ab — welche Module gebraucht werden, wie viele Seiten, welche Integrationen. Nach einem kurzen Gespräch (30 Min, kostenlos) bekommst du ein individuelles Festpreis-Angebot.",
   },
   {
-    title: "Bundle-Rabatt nur bei Paket-Buchung",
-    body: "Werden alle Module eines Pakets gemeinsam gebucht, gibt es −15 % auf die Modul-Summe. Einzeln zusammengekaufte Module kosten den vollen Preis.",
+    title: "Alle Beträge netto",
+    body: "Die angegebenen Beträge verstehen sich ohne Umsatzsteuer. Auf Rechnung kommt 19 % USt dazu.",
   },
   {
     title: "Tikiz-Honorar ≠ Drittkosten",
-    body: "Hosting bei Vercel, Domain, ggf. Resend/Upstash laufen auf Accounts des Kunden und werden nicht über Tikiz abgerechnet. Transparent im Angebot ausgewiesen.",
+    body: "Hosting (Vercel), Domain, E-Mail-Versand und ähnliche laufende Kosten laufen direkt auf Accounts des Kunden und werden nicht über Tikiz abgerechnet — im Angebot transparent ausgewiesen.",
   },
   {
     title: "Angebot 14 Tage gültig",
-    body: "Nach Eingang aller Infos erstelle ich ein Festpreis-Angebot. Das bleibt 14 Tage gültig — genug Zeit zum Überlegen, kein Druck.",
+    body: "Nach Eingang aller Projekt-Infos erstelle ich ein Festpreis-Angebot. Das bleibt 14 Tage gültig — genug Zeit zum Überlegen, kein Druck.",
   },
   {
     title: "Zahlungsmodalitäten",
-    body: "Bis 5.000 € netto: 50 % bei Auftrag, 50 % bei Launch. Ab 5.000 €: 30 % bei Auftrag, 40 % bei Design-Freigabe, 30 % bei Launch.",
+    body: "Kleine Projekte: 50 % bei Auftrag, 50 % bei Launch. Größere Projekte: 30 % bei Auftrag, 40 % bei Design-Freigabe, 30 % bei Launch. Auf Wunsch Ratenzahlung.",
   },
   {
     title: "Änderungen nach Launch",
-    body: "Mit Wartungsvertrag: aus dem monatlichen Kontingent. Ohne Vertrag: " +
-      `${eur(HOURLY_RATE_WITHOUT_CARE)}/Stunde netto. Neue Module jederzeit zubuchbar zum Listenpreis.`,
+    body: "Mit Wartungsvertrag: aus dem monatlichen Kontingent. Ohne Vertrag: nach Aufwand zum individuellen Stundensatz. Neue Module jederzeit zubuchbar.",
   },
 ];
