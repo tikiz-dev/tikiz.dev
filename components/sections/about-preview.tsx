@@ -38,8 +38,7 @@ export function AboutPreview() {
                 und Umgebung.
               </p>
               <p>
-                Parallel dazu entwickle ich Software, inzwischen hauptberuflich
-                als Freelancer. Mit{" "}
+                Parallel dazu entwickle ich Software — mit{" "}
                 <span className="text-[color:var(--color-text)]">
                   Next.js&nbsp;16
                 </span>
@@ -48,7 +47,7 @@ export function AboutPreview() {
                   TypeScript
                 </span>{" "}
                 und einem klaren Versprechen: keine Plugin-Hölle, keine
-                aufgeblasenen Builder — sondern Code, den man in fünf Jahren
+                aufgeblasenen Builder, sondern Code, den man in fünf Jahren
                 noch lesen kann.
               </p>
             </div>
