@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
@@ -108,13 +108,27 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
           ))}
         </div>
 
-        <Link
-          href={`/work/${project.slug}`}
-          className="group inline-flex items-center gap-2 text-sm font-medium text-[color:var(--color-brand-300)] transition-colors hover:text-[color:var(--color-brand-200)]"
-        >
-          Case Study lesen
-          <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-        </Link>
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+          <Link
+            href={`/work/${project.slug}`}
+            className="group inline-flex items-center gap-2 text-sm font-medium text-[color:var(--color-brand-300)] transition-colors hover:text-[color:var(--color-brand-200)]"
+          >
+            Case Study lesen
+            <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </Link>
+
+          {project.status === "live" && project.url && (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 text-sm font-medium text-[color:var(--color-text-muted)] transition-colors hover:text-[color:var(--color-text)]"
+            >
+              Live-Website besuchen
+              <ExternalLink className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          )}
+        </div>
       </div>
     </ScrollReveal>
   );

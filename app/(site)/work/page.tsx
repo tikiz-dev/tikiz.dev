@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { PROJECTS } from "@/content/projects";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
@@ -44,33 +44,56 @@ export default function WorkIndex() {
           <ScrollRevealStagger className="grid gap-8 md:grid-cols-2">
             {PROJECTS.map((p) => (
               <ScrollRevealItem key={p.slug}>
-                <Link
-                  href={`/work/${p.slug}`}
-                  className="group block focus:outline-none"
-                >
-                  <div className="space-y-5">
+                <article className="group relative space-y-5">
+                  <Link
+                    href={`/work/${p.slug}`}
+                    className="block focus:outline-none"
+                    aria-label={`Case Study: ${p.title}`}
+                  >
                     <ProjectVisual project={p} />
+                  </Link>
 
-                    <div>
-                      <div className="mb-3 flex flex-wrap items-center gap-2">
-                        <Badge dot tone={p.accent}>
-                          {p.year}
-                        </Badge>
-                        <Badge>{p.industry}</Badge>
-                      </div>
+                  <div>
+                    <div className="mb-3 flex flex-wrap items-center gap-2">
+                      <Badge dot tone={p.accent}>
+                        {p.year}
+                      </Badge>
+                      <Badge>{p.industry}</Badge>
+                    </div>
+                    <Link
+                      href={`/work/${p.slug}`}
+                      className="focus:outline-none"
+                    >
                       <h2 className="text-2xl font-semibold mb-2 transition-colors group-hover:text-[color:var(--color-brand-300)]">
                         {p.title}
                       </h2>
-                      <p className="text-[color:var(--color-text-muted)] leading-relaxed mb-4">
-                        {p.tagline}
-                      </p>
-                      <span className="inline-flex items-center gap-2 text-sm font-medium text-[color:var(--color-brand-300)]">
+                    </Link>
+                    <p className="text-[color:var(--color-text-muted)] leading-relaxed mb-4">
+                      {p.tagline}
+                    </p>
+                    <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+                      <Link
+                        href={`/work/${p.slug}`}
+                        className="inline-flex items-center gap-2 text-sm font-medium text-[color:var(--color-brand-300)] hover:text-[color:var(--color-brand-200)] transition-colors"
+                      >
                         Case Study
-                        <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                      </span>
+                        <ArrowUpRight className="size-4 transition-transform hover:translate-x-0.5 hover:-translate-y-0.5" />
+                      </Link>
+
+                      {p.status === "live" && p.url && (
+                        <a
+                          href={p.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-sm text-[color:var(--color-text-muted)] transition-colors hover:text-[color:var(--color-text)]"
+                        >
+                          Live-Website
+                          <ExternalLink className="size-3.5" />
+                        </a>
+                      )}
                     </div>
                   </div>
-                </Link>
+                </article>
               </ScrollRevealItem>
             ))}
           </ScrollRevealStagger>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check, ExternalLink } from "lucide-react";
 import { PROJECTS, getProjectBySlug } from "@/content/projects";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
@@ -77,8 +77,30 @@ export default async function ProjectDetail({
         ]}
       />
 
+      {/* Live link */}
+      {project.status === "live" && project.url && (
+        <section className="relative">
+          <Container>
+            <ScrollReveal>
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--color-brand-500)]/30 bg-[color:var(--color-brand-500)]/10 px-5 py-2.5 text-sm font-medium text-[color:var(--color-brand-300)] transition-colors hover:bg-[color:var(--color-brand-500)]/15 hover:text-[color:var(--color-brand-200)]"
+              >
+                Live-Website besuchen ·{" "}
+                <span className="font-mono text-xs opacity-75">
+                  {project.url.replace(/^https?:\/\//, "")}
+                </span>
+                <ExternalLink className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            </ScrollReveal>
+          </Container>
+        </section>
+      )}
+
       {/* Hero visual */}
-      <section className="relative -mt-12 sm:-mt-16">
+      <section className="relative mt-8 sm:mt-10">
         <Container>
           <ScrollReveal>
             <ProjectVisual project={project} large />
